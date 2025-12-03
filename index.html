@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beni Affet</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* Fotoğrafı buraya tanımladık */
+            background: url('arkaplan.jpg') center/cover no-repeat;
+            
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            
+            /* Yazıların fotoğraftaki yaprakların üzerinde daha net okunması için hafif bir gölge */
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            /* Arkadaki manzara hafif görünsün diye %85 opak beyaz */
+            background-color: rgba(255, 255, 255, 0.90);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 85%; 
+            max-width: 500px;
+            /* Buzlu cam efekti */
+            backdrop-filter: blur(4px);
+        }
+
+        h1 { color: #333; font-size: 1.8rem; margin-bottom: 20px; }
+        
+        p { 
+            color: #444; 
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            margin-bottom: 30px; 
+            font-weight: 500;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            z-index: 100; /* Butonlar her zaman en üstte olsun */
+        }
+
+        #btn-yes {
+            background-color: #2ecc71;
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.5);
+        }
+
+        #btn-no {
+            background-color: #e74c3c;
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0.9; }
+            100% { transform: translateY(-140vh); opacity: 0; }
+        }
+
+        /* Telefonda daha düzgün görünmesi için ayarlar */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            p { font-size: 1rem; }
+            button { padding: 12px 25px; font-size: 1rem; }
+            .container { padding: 25px 20px; }
+        }
+
+        /* Mobilde metin kaymasını önlemek için */
+        .single-line { display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Yarenim...</h1>
+        
+        <p>
+            <span class="single-line">Deniz gözlerine bakamadığım</span> her gün bana ızdırap oldu.<br>
+            Özür dilerim.<br><br>
+            <strong>Şu instagramı kabul et de gözlerine bakabileyim be güzelim.</strong>
+        </p>
+
+        <div class="buttons">
+            <button id="btn-yes" onclick="affetti()">Affettim</button>
+            <button id="btn-no" onclick="buyut()">Affetmedim</button>
+        </div>
+    </div>
+
+    <script>
+        let scaleFactor = 1;
+        const yesBtn = document.getElementById('btn-yes');
+        const noBtn = document.getElementById('btn-no');
+
+        function buyut() {
+            scaleFactor += 0.5;
+            yesBtn.style.transform = `scale(${scaleFactor})`;
+            
+            // Affetmedim'e bastıkça çıkan yazılar
+            const redTexts = ["Emin misin?", "Gerçekten mi?", "Yapma be!", "Kıyamazsın...", "Hadi ama!", "Bak üzülürüm...", "Son şans!"];
+            const randomText = redTexts[Math.floor(Math.random() * redTexts.length)];
+            noBtn.innerText = randomText;
+        }
+
+        function affetti() {
+            // Arka planı değiştirme, kalpler görünsün diye düz renk yapıyoruz
+            document.body.style.background = "#ff9ecb"; 
+            document.body.style.boxShadow = "none";
+
+            document.body.innerHTML = `
+                <div style="text-align:center; color: white; position: relative; z-index: 10; padding:20px; margin-top: 30vh;">
+                    <h1 style="font-size:3rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.2);">Şükürler Olsun! 💙</h1>
+                    <p style="font-size:1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Artık gözlerine bakabilirim...</p>
+                </div>
+            `;
+
+            // Kalp animasyonu başlat
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement("div");
+                heart.innerHTML = "💗";
+                heart.style.position = "absolute";
+                heart.style.fontSize = `${Math.random() * 30 + 20}px`; // Farklı boyutlarda kalpler
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = "110%";
+                heart.style.opacity = 0.8;
+                heart.style.animation = `floatUp ${3 + Math.random() * 4}s linear infinite`; // Farklı hızlarda
+                document.body.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+</html>
